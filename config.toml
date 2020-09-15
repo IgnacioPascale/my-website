@@ -82,8 +82,8 @@ disqusShortname = ""
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
     title = "Hi, I'm Ignacio"
-    subtitle = "Welcome to my portfolio! You can find my projects below"
-    buttonText = "Get Started"
+    subtitle = "Helping people take better, smarter and more efficient decisions based on evidence"
+    buttonText = "See my portfolio"
 
 
   # Tiles Section
@@ -92,40 +92,40 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "NYT Masks"
-      subtitle = "Hwo does mask use acceptance vary in the US?"
-      image = "pic01.jpg"
-      url = "blogs/blog5"
-
-    [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic02.jpg"
-      url = "blogs/tempus"
-
-    [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
-      image = "pic03.jpg"
-      url = "blogs/magna"
-
-    [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
+      title = "How many UK bikes are going to be hired?"
+      subtitle = "Using regression analysis to predict the hirings of UK bikes"
       image = "pic04.jpg"
       url = "blogs/ipsum"
 
     [[params.tiles.showcase]]
-      title = "Consequat"
-      subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic05.jpg"
-      url = "blogs/ipsum"
+      title = "How popular is Donald Trump?"
+      subtitle = "Analysis on his first presidential cycle"
+      image = "pic02.jpg"
+      url = "blogs/tempus"
 
     [[params.tiles.showcase]]
-      title = "Etiam"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic06.jpg"
-      url = "blogs/ipsum"
+      title = "Do Women use more Instagram/Snapchat in US?"
+      subtitle = "Statistics in social media usage in 2016"
+      image = "pic03.jpg"
+      url = "blogs/magna"
+      
+    [[params.tiles.showcase]]
+      title = "NYT Masks"
+      subtitle = "How does mask use acceptance vary in the US?"
+      image = "pic01.jpg"
+      url = "blogs/blog5"
+
+   # [[params.tiles.showcase]]
+  #    title = "Consequat"
+  #    subtitle = "Ipsum Dolor Sit Amet"
+  #    image = "pic05.jpg"
+  #    url = "blogs/ipsum"
+
+   # [[params.tiles.showcase]]
+  #    title = "Etiam"
+  #    subtitle = "Feugiat Amet Tempus"
+  #    image = "pic06.jpg"
+  #    url = "blogs/ipsum"
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]
@@ -138,13 +138,17 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
-    buttonText = "Get Started"
+    title = "Data advocate"
+    subtitle = """ 
+    Hi! I am a data advocate whose life calling is to help people take better, smarter and more efficient decisions based on evidence.
+    
+    I have a BSc in Management and Information Systems from the Instituto Tecnológico de Buenos Aires and and I am currently reading for the MSc in Analytics and Management at London Business School.
+
+    Some of the skills I've developed since I started my journey are Python, R, SQL, Google Script and in-depth knowledge of cloud-based services such as Amazon S3, EC2 and Redshift, Google BigQuery and visualisation tools/libraries such as PowerBI and ggplot2/matplotlib libraries.
+
+    Alongside my formal education, I am currently self-learning C to learn how to write efficient code in different languages and Java to get to the roots of object-directed programming."""
+    
+    buttonText = "See my projects!"
     url = "blogs"
 
 
@@ -172,50 +176,50 @@ disqusShortname = ""
     # by copying the corresponding map with frontmatter code.
     [[params.contact.email]]
     title = "Email"
-    email = "example@domain.com"
+    email = "ipascale.mam2021@london.edu"
 
     [[params.contact.phone]]
     title = "Phone"
     phone = "(000) 000-0000 x1234"
 
     [[params.contact.address]]
-    title = "Address"
-    street = "Street"
-    city = "City, ST 00000"
-    country = "Country"
+    title = "London Business School"
+    street = "Regent's Park"
+    city = "London, NW1 4SA"
+    country = "United Kingdom"
 
   # Footer section
   [params.footer]
     enable = true
-    copyright = "Company Name"
+    copyright = "Ignacio Pascale"
 
     # Uses font awesome icons
-    [[params.footer.social]]
-      icon = "fa-twitter"
-      url= "https://www.twitter.com"
-      label = "Twitter"
+    #[[params.footer.social]]
+    #  icon = "fa-twitter"
+    #  url= "https://www.twitter.com"
+    #  label = "Twitter"
 
-    [[params.footer.social]]
-      icon = "fa-facebook"
-      url= "https://www.facebook.com"
-      label = "Facebook"
+    #[[params.footer.social]]
+    #  icon = "fa-facebook"
+    #  url= "https://www.facebook.com"
+    #  label = "Facebook"
 
-    [[params.footer.social]]
-      icon = "fa-instagram"
-      url= "https://www.instagram.com"
-      label = "Instagram"
+    #[[params.footer.social]]
+    #  icon = "fa-instagram"
+    #  url= "https://www.instagram.com"
+    #  label = "Instagram"
     
     [[params.footer.social]]
       icon = "fa-github"
-      url= "https://www.github.com"
+      url= "https://www.github.com/ignaciopascale"
       label = "GitHub"
 
     [[params.footer.social]]
       icon = "fa-linkedin"
-      url= "https://www.linkedin.com"
+      url= "https://www.linkedin.com/in/ignacio-jose-pascale"
       label = "LinkedIn"
 
     [[params.footer.quicklinks]]
       text = "Design: "
-      url= "https://www.html5up.net"
-      alt = "HTML5 UP"
+      url= "https://www.linkedin.com/in/ignacio-jose-pascale"
+      alt = "Ignacio Pascale"
