@@ -90,6 +90,7 @@ disqusShortname = ""
   [params.tiles]
     enable = true
     # Display your showcases here.
+
     
     [[params.tiles.showcase]]
       title = "How many UK bikes are going to be hired?"
@@ -107,7 +108,7 @@ disqusShortname = ""
       title = "Do Women use more Instagram/Snapchat in US?"
       subtitle = "Statistics in social media usage in 2016"
       image = "pic03.jpg"
-      url = "blogs/magna"
+      url = "blogs/social_american_society"
       
     [[params.tiles.showcase]]
       title = "NYT Masks"
@@ -140,9 +141,10 @@ disqusShortname = ""
     enable = true
     title = "Data advocate"
     subtitle = """ 
+    
     Hi! I am a data advocate whose life calling is to help people take better, smarter and more efficient decisions based on evidence.
     
-    I have a BSc in Management and Information Systems from the Instituto Tecnológico de Buenos Aires and and I am currently reading for the MSc in Analytics and Management at London Business School.
+    I have a BSc in Management and Information Systems from the Instituto Tecnológico de Buenos Aires and I am currently reading for the MSc in Analytics and Management at London Business School.
 
     Some of the skills I've developed since I started my journey are Python, R, SQL, Google Script and in-depth knowledge of cloud-based services such as Amazon S3, EC2 and Redshift, Google BigQuery and visualisation tools/libraries such as PowerBI and ggplot2/matplotlib libraries.
 
