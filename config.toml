@@ -109,12 +109,6 @@ disqusShortname = ""
       subtitle = "Statistics in social media usage in 2016 in the United States"
       image = "us_flag.jpg"
       url = "blogs/social_american_society"
-      
-    [[params.tiles.showcase]]
-      title = "NYT Masks"
-      subtitle = "How does mask use acceptance vary in the US?"
-      image = "pic01.jpg"
-      url = "blogs/blog5"
 
    # [[params.tiles.showcase]]
   #    title = "Consequat"
