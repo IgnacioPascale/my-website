@@ -1,0 +1,187 @@
+---
+categories:
+  -""
+  -""
+date: "2020-09-20"
+description: Analysis on his first presidential cycle
+draft: false
+image: trump_popular.jpg
+keywords: ""
+slug: trump_popular
+title: How popular is Donald Trump?
+
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, include=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(infer)
+library(ggrepel)
+library(knitr)
+library(ggpubr)
+library(scales)
+library(tidytext)
+```
+
+
+As we saw before, fivethirtyeight.com has detailed data on [all polls that track the president's approval ](https://projects.fivethirtyeight.com/trump-approval-ratings).
+
+# Exploratory Data Analysis
+
+
+```{r, cache=TRUE}
+# Import approval polls data
+approval_polllist <- read_csv(here::here('data', 'approval_polllist.csv'))
+
+skim(approval_polllist)
+
+```
+
+
+As it seems, our dataset contains a total of 14533 observations and 22 variables, from which 12 are `character` variables, 1 `logical` and 9 `numeric`.
+
+This one also seems to be a clean data set; there are no `NA` values in our `numeric` variables, according to our `skim`. Unfortunately, our `logical` variable `tracking` is missing 8713 records, and our `character` variables `multiversions` and `grade` are missing 14463 and 485 records accordingly.
+
+Let's now take a raw view at our data using the function `sample_n`.
+
+```{r sample_trump, echo=TRUE}
+
+# Take a sample size
+sample_n(approval_polllist, 5)
+
+```
+The good news is that in our analysis we will not need any of the 3 variables with missing values. Therefore, we can dismiss them and continue with our analysis.
+
+## Data wrangling
+
+First, we filter according to the desired columns, and then we filter the data.
+
+```{r cleandata, echo=TRUE}
+
+
+
+df <- approval_polllist %>% 
+  filter(subgroup %in% "Voters") %>% 
+  select(enddate, approve, disapprove, poll_id) #include poll_id to check for duplicate polls
+
+#check for duplicates and missing entries
+any(duplicated(df))
+any(is.na(df))
+
+glimpse(df)
+```
+
+There are neither duplicates nor missing values. We can now wrangle the data to sort it by date, group it per week and year, and extract the confidence intervals.
+
+```{r}
+grouped_df <- df %>% 
+  #get year and week number
+  mutate(date = mdy(enddate), 
+         weeknr = week(date), 
+         yearnr = year(date)) %>%
+  
+  #group poll date per week
+  group_by(weeknr, yearnr) %>%
+  
+  #summarise statistics of the grouped data
+  summarise(avg_net_apr = mean(approve - disapprove), 
+            std = sd(approve - disapprove), 
+            count = n(), 
+            t_crit = qt(.975, count-1)) %>% 
+  mutate(se = std / sqrt(count)) %>% 
+  
+  #calculate confidence interval
+  mutate(upper = avg_net_apr + t_crit*se,
+          lower = avg_net_apr - t_crit*se) 
+  
+grouped_df
+```
+
+### Plotting
+
+Now, we can construct the desired plot.
+
+```{r}
+grouped_df %>%
+  
+  ggplot(aes(weeknr, avg_net_apr))+
+  
+  #create facet wrap 
+  facet_wrap(~yearnr)+
+  
+  #add line with dots; colour according to the year
+  geom_path(aes(color = factor(yearnr))) + geom_point(aes(color = factor(yearnr)), size = 0.85) +
+  
+  #add band around line to display CI
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = factor(yearnr), color = factor(yearnr)),
+              alpha = 0.1)+ #color adds border on the edge
+  
+  #horizontal line on y=0
+  geom_hline(yintercept=0, color = "orange")+
+  
+  #adjust scales
+  scale_x_continuous(expand = expansion(mult = .07), #white border around line plots
+                     breaks=seq(0,52,13)) + #x-axis breaks
+  scale_y_continuous(breaks = breaks_extended(n=12)) + #12 breaks on y-axis
+  
+  #aesthetics
+  theme_bw() + #black border around plots
+  theme(aspect.ratio = 1/3, legend.position = "none") + 
+  labs(x = "Week of the year", 
+       y = "Averge Net Approval (%)", 
+       title = "Trump's popularity remained steadily below 50% throughout his term", 
+       subtitle = "Estimated Net Approval (approve-disapprove) for Donald Trump")
+```
+
+As a reminder, the plot should look like this:
+
+```{r trump_margins, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "trump_approval_margin.png"), error = FALSE)
+```
+
+We can appreciate that the two graphs looks very similar. Differences can, however, be found in the confidence interval band. This is explained by the use of the t-critical value as opposed to a multiplication by 1.96 when calculating the upper and lower bounds. 
+
+The graphs show that Trump's approval rate has decreased very rapidly below the 50% mark in the early course of his presidency, and has since then remained fairly stable at roughly 40%. The early weeks of 2020 show a further decrease in popularity. This coincides with the start of the corona crisis, and subsequent restricting measures imposed on the population. As these were sometimes seen as a restriction of *freedom*, they were not well tolerated by some. In later weeks of 2020, Trump's populariy has seen a new rise, as restrictions were lifted and the presidential election campaigns have started going at full steam.
+
+## Comparing Confidence Intervals
+
+Let's analyse the the confidence intervals for `week 15` (6-12 April 2020) and `week 34` (17-23 August 2020). 
+
+**What's going on?**
+
+```{r}
+grouped_df %>% 
+  filter(weeknr == 15, yearnr == 2020) %>% 
+  select(lower, upper)
+
+grouped_df %>% 
+  filter(weeknr == 34, yearnr == 2020) %>% 
+  select(lower, upper)
+```
+
+It is evident that the confidence interval for week 34 is larger than for week 15. Two elements influence this difference. The first one is the difference in standard deviation: the SD for week 34 is far higher than for week 15. This means that there was more uncertainty among the polls as to the approval rate, which might be due to biased polling techniques or a general uncertainty in the public in the light of the upcoming elections. The second factor is that there are more polls available for week 15 (28 as opposed to 25 for week 34), and a higher sample size decreases the uncertainty.
