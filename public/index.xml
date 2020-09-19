@@ -12,14 +12,24 @@
     
     
     <item>
-      <title>Do Women use more Instagram/Snapchat in US?</title>
+      <title>How do Americans behave on Social Media?</title>
       <link>/blogs/social_american_society/</link>
       <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/blogs/social_american_society/</guid>
-      <description>General Social Survey (GSS) How does the American Society relates to social media, technology and education?
+      <description>General Social Survey (GSS) How does the American Society relate to social media, technology and education?
 The General Social Survey (GSS) gathers data on American society in order to monitor and explain trends in attitudes, behaviours, and attributes. Many trends have been tracked for decades, so one can see the evolution of attitudes, etc in American Society.
-In this section we analyze data from the 2016 GSS sample data, using it to estimate values of population parameters of interest about US adults.</description>
+In this blog post, we analyze data from the 2016 GSS sample data, using it to estimate values of population parameters of interest about US adults.</description>
+    </item>
+    
+    <item>
+      <title>How popular is Donald Trump?</title>
+      <link>/blogs/trump_popular/</link>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/trump_popular/</guid>
+      <description>As we saw before, fivethirtyeight.com has detailed data on all polls that track the president’s approval.
+Exploratory Data Analysis # Import approval polls data approval_polllist &amp;lt;- read_csv(here::here(&amp;#39;data&amp;#39;, &amp;#39;approval_polllist.csv&amp;#39;)) skim(approval_polllist)  Table 1: Data summary  Name approval_polllist  Number of rows 14533  Number of columns 22  _______________________   Column type frequency:   character 12  logical 1  numeric 9  ________________________   Group variables None    Variable type: character</description>
     </item>
     
     <item>

@@ -101,13 +101,13 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "How popular is Donald Trump?"
       subtitle = "Analysis on his first presidential cycle"
-      image = "pic02.jpg"
-      url = "blogs/tempus"
+      image = "trump_dab.jpg"
+      url = "blogs/trump_popular"
 
     [[params.tiles.showcase]]
-      title = "Do Women use more Instagram/Snapchat in US?"
-      subtitle = "Statistics in social media usage in 2016"
-      image = "pic03.jpg"
+      title = "How do americans behave on social media?"
+      subtitle = "Statistics in social media usage in 2016 in the United States"
+      image = "us_flag.jpg"
       url = "blogs/social_american_society"
       
     [[params.tiles.showcase]]

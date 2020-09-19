@@ -5,10 +5,10 @@ categories:
 date: "2020-09-20"
 description: American Society's Social Behaviour in 2016
 draft: false
-image: pic07.jpg
+image: social_media.png
 keywords: ""
 slug: social_american_society
-title: Do Women use more Instagram/Snapchat in US?
+title: How do Americans behave on Social Media?
 
 ---
 ```{r setup, include=FALSE, echo=FALSE}
@@ -50,12 +50,12 @@ library(tidytext)
 
 # General Social Survey (GSS)
 
-**How does the American Society relates to social media, technology and education?**
+**How does the American Society relate to social media, technology and education?**
 
 The [General Social Survey (GSS)](http://www.gss.norc.org/) gathers data on American society in order to monitor and explain trends in attitudes, behaviours, and attributes. Many trends have been tracked for decades, so one can see the evolution of attitudes, etc in American Society.
 
 
-In this section we analyze data from the **2016 GSS sample data**, using it to estimate values of *population parameters* of interest about US adults. The GSS sample data file has 2867 observations of 935 variables, but we are only interested in very few of these variables - therefore we will use a sample that contains only time spend in `email`, `snapchat`, `instagram`, `twitter`; their sex; and what level of education they have.
+In this blog post, we analyze data from the **2016 GSS sample data**, using it to estimate values of *population parameters* of interest about US adults. The GSS sample data file has 2867 observations of 935 variables, but we are only interested in very few of these variables - therefore we will use a sample that contains only time spend in `email`, `snapchat`, `instagram`, `twitter`; their sex; and what level of education they have.
 
 Let's take a look at the data
 
