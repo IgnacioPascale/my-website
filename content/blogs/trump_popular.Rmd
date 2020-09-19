@@ -158,11 +158,6 @@ grouped_df %>%
        subtitle = "Estimated Net Approval (approve-disapprove) for Donald Trump")
 ```
 
-As a reminder, the plot should look like this:
-
-```{r trump_margins, echo=FALSE, out.width="100%"}
-knitr::include_graphics(here::here("images", "trump_approval_margin.png"), error = FALSE)
-```
 
 We can appreciate that the two graphs looks very similar. Differences can, however, be found in the confidence interval band. This is explained by the use of the t-critical value as opposed to a multiplication by 1.96 when calculating the upper and lower bounds. 
 
