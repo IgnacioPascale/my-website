@@ -81,7 +81,7 @@ disqusShortname = ""
   [params.banner]
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
-    title = "Hi, I'm Ignacio"
+    title = "Ignacio Pascale"
     subtitle = "Helping people take better, smarter and more efficient decisions based on evidence"
     buttonText = "See my portfolio"
 
@@ -95,7 +95,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "How many UK bikes are going to be hired?"
       subtitle = "Using regression analysis to predict the hirings of UK bikes"
-      image = "pic04.jpg"
+      image = "londonbikes.jpg"
       url = "blogs/ipsum"
 
     [[params.tiles.showcase]]
