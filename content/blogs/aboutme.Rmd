@@ -5,7 +5,7 @@ categories:
 date: "2020-09-20"
 description: Learn about my story
 draft: false
-image: ignacio.png
+image: ignacio_re.png
 keywords: ""
 slug: aboutme
 title: About me
