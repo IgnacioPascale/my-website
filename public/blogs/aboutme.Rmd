@@ -50,6 +50,7 @@ During this period, my dream of becoming a Data Scientist just got bigger. For t
 ![London Business School](https://london.ac.uk/sites/default/files/styles/promo_large/public/2017-10/london-business-school-Campus.jpg?itok=GEG7ZZJs)
 
 # Skills
+![Python - not quite a poisonous snake](https://cdn-images-1.medium.com/max/1024/0*Bq9czVoOSydbQUQ0)
 
 Other than statistics, coding has become a passion of mine ever since my experience at Thomson Reuters.
 
@@ -58,6 +59,8 @@ Some of the skills I've developed since I started my journey are Python, R, SQL,
 Alongside my formal education, I am currently self-learning C to learn how to write efficient code in different languages and Java to get to the roots of object-directed programming.
 
 # What the future has in store for me
+
+![Space - future?](https://wallpaperaccess.com/full/430660.jpg)
 
 After my graduation on July 2021, I plan to work as a Data Scientist with a broad business spectrum in the deep tech industry. Landing that job will be the wrap up of a story full of challenges, blood and sweat, but I will definitely go for more!
 
