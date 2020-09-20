@@ -28,8 +28,10 @@ In this blog post, we analyze data from the 2016 GSS sample data, using it to es
       <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/blogs/trump_popular/</guid>
-      <description>As we saw before, fivethirtyeight.com has detailed data on all polls that track the president’s approval.
-Exploratory Data Analysis # Import approval polls data approval_polllist &amp;lt;- read_csv(here::here(&amp;#39;data&amp;#39;, &amp;#39;approval_polllist.csv&amp;#39;)) skim(approval_polllist)  Table 1: Data summary  Name approval_polllist  Number of rows 14533  Number of columns 22  _______________________   Column type frequency:   character 12  logical 1  numeric 9  ________________________   Group variables None    Variable type: character</description>
+      <description>Mr Donald Trump is undoubtely one of the most controversial persons in the world. Some people love him, others not so much. And there’s a lot going on about his approval index.
+But how popular is, in reality, Mr. President?
+fivethirtyeight.com has detailed data on all polls that track the president’s approval. You can find this information on the link.
+In this blogpost, we will download the data set approval_pollist to analyse Mr.</description>
     </item>
     
     <item>

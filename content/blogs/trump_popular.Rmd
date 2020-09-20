@@ -49,10 +49,17 @@ library(tidytext)
 ```
 
 
-As we saw before, fivethirtyeight.com has detailed data on [all polls that track the president's approval ](https://projects.fivethirtyeight.com/trump-approval-ratings).
+Mr Donald Trump is undoubtely one of the most controversial persons in the world. Some people love him, others not so much. And there's a lot going on about his approval index. 
 
-# Exploratory Data Analysis
+**But how popular is, in reality, Mr. President?**
 
+fivethirtyeight.com has detailed data on [all polls that track the president's approval ](https://projects.fivethirtyeight.com/trump-approval-ratings). You can find this information on the link.
+
+In this blogpost, we will download the data set `approval_pollist` to analyse Mr. Trump's popularity throughout his presidential cycle. The idea is to produce a plot that will let us analyse this variable each year, and introduce an interval confidence for every point.
+
+## Exploratory Data Analysis
+
+Let's import our data and have a first view using `skim()`.
 
 ```{r, cache=TRUE}
 # Import approval polls data
@@ -75,30 +82,40 @@ Let's now take a raw view at our data using the function `sample_n`.
 sample_n(approval_polllist, 5)
 
 ```
+
 The good news is that in our analysis we will not need any of the 3 variables with missing values. Therefore, we can dismiss them and continue with our analysis.
 
 ## Data wrangling
 
-First, we filter according to the desired columns, and then we filter the data.
+Our variables of interest are:
+
+-`approve`: approval rate
+-`disapprove`: disapproval rate
+-`poll_id`: poll_id
+-`enddate`: to associate the "grade" or approval to a date
+
+First, we filter the data on the `subgroup` "Voters", as this is what we are interested in, and then `select()` our variables of interest.
 
 ```{r cleandata, echo=TRUE}
 
-
+# Create new df object
 
 df <- approval_polllist %>% 
   filter(subgroup %in% "Voters") %>% 
   select(enddate, approve, disapprove, poll_id) #include poll_id to check for duplicate polls
 
-#check for duplicates and missing entries
+# Check for duplicates and missing entries
 any(duplicated(df))
 any(is.na(df))
 
 glimpse(df)
 ```
 
-There are neither duplicates nor missing values. We can now wrangle the data to sort it by date, group it per week and year, and extract the confidence intervals.
+There are neither duplicates nor missing values - as confirmed before. 
 
-```{r}
+We can now wrangle the data to sort it by date, group it per week and year. For this purpose, we will use `mutate()` and the functions in the library `lubridate` that will help us manage dates. Also, we will create confindence intervals for the sample mean of the `approve`-`disapprove` - this is the population parameter we are interested in.
+
+```{r grouped_df, echo=TRUE}
 grouped_df <- df %>% 
   #get year and week number
   mutate(date = mdy(enddate), 
@@ -106,29 +123,30 @@ grouped_df <- df %>%
          yearnr = year(date)) %>%
   
   #group poll date per week
-  group_by(weeknr, yearnr) %>%
+  group_by(yearnr, weeknr) %>%
   
   #summarise statistics of the grouped data
   summarise(avg_net_apr = mean(approve - disapprove), 
             std = sd(approve - disapprove), 
             count = n(), 
             t_crit = qt(.975, count-1)) %>% 
-  mutate(se = std / sqrt(count)) %>% 
+  mutate(se = std / sqrt(count),
   
   #calculate confidence interval
-  mutate(upper = avg_net_apr + t_crit*se,
-          lower = avg_net_apr - t_crit*se) 
+        upper = avg_net_apr + t_crit*se,
+        lower = avg_net_apr - t_crit*se) 
   
 grouped_df
 ```
+Our data frame is now grouped by year, week and includes our `avg_net_apr` (sample mean), `std`, `se` and both `upper` and `lower` confidence intervals. We are ready to plot this.
 
-### Plotting
+## Plotting
 
-Now, we can construct the desired plot.
+Now, we can construct the plot we want to analyze.
 
-```{r}
+```{r plot, echo=TRUE, fig.width=10, fig.height=10}
 grouped_df %>%
-  
+  # Create ggplot
   ggplot(aes(weeknr, avg_net_apr))+
   
   #create facet wrap 
@@ -158,14 +176,17 @@ grouped_df %>%
        subtitle = "Estimated Net Approval (approve-disapprove) for Donald Trump")
 ```
 
+**What is this telling us?**
 
-We can appreciate that the two graphs looks very similar. Differences can, however, be found in the confidence interval band. This is explained by the use of the t-critical value as opposed to a multiplication by 1.96 when calculating the upper and lower bounds. 
+The graph shows that Trump's approval rate has decreased very rapidly below the 50% mark in the early course of his presidency, and has since then remained fairly stable at roughly 40%. 
 
-The graphs show that Trump's approval rate has decreased very rapidly below the 50% mark in the early course of his presidency, and has since then remained fairly stable at roughly 40%. The early weeks of 2020 show a further decrease in popularity. This coincides with the start of the corona crisis, and subsequent restricting measures imposed on the population. As these were sometimes seen as a restriction of *freedom*, they were not well tolerated by some. In later weeks of 2020, Trump's populariy has seen a new rise, as restrictions were lifted and the presidential election campaigns have started going at full steam.
+The early weeks of 2020 show a further decrease in popularity. This coincides with the start of the corona crisis, and subsequent restricting measures imposed on the population. As these were sometimes seen as a restriction of *freedom*, they were not well tolerated by some. 
+
+In later weeks of 2020, Trump's populariy has seen a new rise, as restrictions were lifted and the presidential election campaigns have started going at full steam.
 
 ## Comparing Confidence Intervals
 
-Let's analyse the the confidence intervals for `week 15` (6-12 April 2020) and `week 34` (17-23 August 2020). 
+Taking a look at year 2020, there's a big difference in some confidence intervals. In the first part of the year, these were narrow - however, more variability is present in the last bits. Let's analyse the the confidence intervals for `week 15` (6-12 April 2020) and `week 34` (17-23 August 2020) and see what they are telling us.
 
 **What's going on?**
 

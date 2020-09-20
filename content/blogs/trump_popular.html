@@ -14,9 +14,13 @@ title: How popular is Donald Trump?
 
 
 
-<p>As we saw before, fivethirtyeight.com has detailed data on <a href="https://projects.fivethirtyeight.com/trump-approval-ratings">all polls that track the president’s approval</a>.</p>
-<div id="exploratory-data-analysis" class="section level1">
-<h1>Exploratory Data Analysis</h1>
+<p>Mr Donald Trump is undoubtely one of the most controversial persons in the world. Some people love him, others not so much. And there’s a lot going on about his approval index.</p>
+<p><strong>But how popular is, in reality, Mr. President?</strong></p>
+<p>fivethirtyeight.com has detailed data on <a href="https://projects.fivethirtyeight.com/trump-approval-ratings">all polls that track the president’s approval</a>. You can find this information on the link.</p>
+<p>In this blogpost, we will download the data set <code>approval_pollist</code> to analyse Mr. Trump’s popularity throughout his presidential cycle. The idea is to produce a plot that will let us analyse this variable each year, and introduce an interval confidence for every point.</p>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+<p>Let’s import our data and have a first view using <code>skim()</code>.</p>
 <pre class="r"><code># Import approval polls data
 approval_polllist &lt;- read_csv(here::here(&#39;data&#39;, &#39;approval_polllist.csv&#39;))
 
@@ -392,14 +396,22 @@ sample_n(approval_polllist, 5)</code></pre>
 ## #   adjusted_disapprove &lt;dbl&gt;, multiversions &lt;chr&gt;, tracking &lt;lgl&gt;, url &lt;chr&gt;,
 ## #   poll_id &lt;dbl&gt;, question_id &lt;dbl&gt;, createddate &lt;chr&gt;, timestamp &lt;chr&gt;</code></pre>
 <p>The good news is that in our analysis we will not need any of the 3 variables with missing values. Therefore, we can dismiss them and continue with our analysis.</p>
+</div>
 <div id="data-wrangling" class="section level2">
 <h2>Data wrangling</h2>
-<p>First, we filter according to the desired columns, and then we filter the data.</p>
-<pre class="r"><code>df &lt;- approval_polllist %&gt;% 
+<p>Our variables of interest are:</p>
+<p>-<code>approve</code>: approval rate
+-<code>disapprove</code>: disapproval rate
+-<code>poll_id</code>: poll_id
+-<code>enddate</code>: to associate the “grade” or approval to a date</p>
+<p>First, we filter the data on the <code>subgroup</code> “Voters”, as this is what we are interested in, and then <code>select()</code> our variables of interest.</p>
+<pre class="r"><code># Create new df object
+
+df &lt;- approval_polllist %&gt;% 
   filter(subgroup %in% &quot;Voters&quot;) %&gt;% 
   select(enddate, approve, disapprove, poll_id) #include poll_id to check for duplicate polls
 
-#check for duplicates and missing entries
+# Check for duplicates and missing entries
 any(duplicated(df))</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <pre class="r"><code>any(is.na(df))</code></pre>
@@ -411,7 +423,8 @@ any(duplicated(df))</code></pre>
 ## $ approve    &lt;dbl&gt; 46.0, 45.2, 42.6, 36.0, 57.0, 43.0, 44.0, 59.0, 41.3, 45.1…
 ## $ disapprove &lt;dbl&gt; 37.0, 44.3, 47.8, 44.0, 43.0, 39.0, 44.0, 41.0, 48.5, 46.9…
 ## $ poll_id    &lt;dbl&gt; 49249, 49426, 49425, 49260, 49266, 49254, 49237, 49247, 49…</code></pre>
-<p>There are neither duplicates nor missing values. We can now wrangle the data to sort it by date, group it per week and year, and extract the confidence intervals.</p>
+<p>There are neither duplicates nor missing values - as confirmed before.</p>
+<p>We can now wrangle the data to sort it by date, group it per week and year. For this purpose, we will use <code>mutate()</code> and the functions in the library <code>lubridate</code> that will help us manage dates. Also, we will create confindence intervals for the sample mean of the <code>approve</code>-<code>disapprove</code> - this is the population parameter we are interested in.</p>
 <pre class="r"><code>grouped_df &lt;- df %&gt;% 
   #get year and week number
   mutate(date = mdy(enddate), 
@@ -419,40 +432,42 @@ any(duplicated(df))</code></pre>
          yearnr = year(date)) %&gt;%
   
   #group poll date per week
-  group_by(weeknr, yearnr) %&gt;%
+  group_by(yearnr, weeknr) %&gt;%
   
   #summarise statistics of the grouped data
   summarise(avg_net_apr = mean(approve - disapprove), 
             std = sd(approve - disapprove), 
             count = n(), 
             t_crit = qt(.975, count-1)) %&gt;% 
-  mutate(se = std / sqrt(count)) %&gt;% 
+  mutate(se = std / sqrt(count),
   
   #calculate confidence interval
-  mutate(upper = avg_net_apr + t_crit*se,
-          lower = avg_net_apr - t_crit*se) 
+        upper = avg_net_apr + t_crit*se,
+        lower = avg_net_apr - t_crit*se) 
   
 grouped_df</code></pre>
 <pre><code>## # A tibble: 191 x 9
-## # Groups:   weeknr [53]
-##    weeknr yearnr avg_net_apr   std count t_crit    se  upper  lower
-##     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-##  1      1   2018      -10.7   2.09    20   2.09 0.466  -9.69 -11.6 
-##  2      1   2019      -10.0   3.95    27   2.06 0.760  -8.44 -11.6 
-##  3      1   2020       -8.57  4.65    14   2.16 1.24   -5.88 -11.3 
-##  4      2   2018      -11.5   3.61    26   2.06 0.708 -10.1  -13.0 
-##  5      2   2019      -11.2   2.23    33   2.04 0.389 -10.4  -12.0 
-##  6      2   2020       -7.8   4.27    20   2.09 0.956  -5.80  -9.80
-##  7      3   2018      -12.1   4.57    33   2.04 0.795 -10.5  -13.7 
-##  8      3   2019      -12.9   2.16    38   2.03 0.351 -12.2  -13.6 
-##  9      3   2020       -7.52  6.11    21   2.09 1.33   -4.74 -10.3 
-## 10      4   2017        3.26  8.11    13   2.18 2.25    8.17  -1.64
+## # Groups:   yearnr [4]
+##    yearnr weeknr avg_net_apr   std count t_crit    se   upper   lower
+##     &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1   2017      4       3.26   8.11    13   2.18 2.25   8.17    -1.64 
+##  2   2017      5       2.21   3.46    18   2.11 0.815  3.93     0.491
+##  3   2017      6      -0.933  5.36    24   2.07 1.09   1.33    -3.20 
+##  4   2017      7      -2.64   6.28    25   2.06 1.26  -0.0462  -5.23 
+##  5   2017      8      -3.83   6.22    24   2.07 1.27  -1.21    -6.46 
+##  6   2017      9      -0.955  4.21    22   2.08 0.897  0.912   -2.82 
+##  7   2017     10      -2.06   4.47    26   2.06 0.877 -0.254   -3.87 
+##  8   2017     11      -5.53   3.77    25   2.06 0.754 -3.97    -7.08 
+##  9   2017     12      -4.38   6.78    25   2.06 1.36  -1.58    -7.18 
+## 10   2017     13      -9.71   3.56    25   2.06 0.712 -8.24   -11.2  
 ## # … with 181 more rows</code></pre>
-<div id="plotting" class="section level3">
-<h3>Plotting</h3>
-<p>Now, we can construct the desired plot.</p>
+<p>Our data frame is now grouped by year, week and includes our <code>avg_net_apr</code> (sample mean), <code>std</code>, <code>se</code> and both <code>upper</code> and <code>lower</code> confidence intervals. We are ready to plot this.</p>
+</div>
+<div id="plotting" class="section level2">
+<h2>Plotting</h2>
+<p>Now, we can construct the plot we want to analyze.</p>
 <pre class="r"><code>grouped_df %&gt;%
-  
+  # Create ggplot
   ggplot(aes(weeknr, avg_net_apr))+
   
   #create facet wrap 
@@ -480,31 +495,31 @@ grouped_df</code></pre>
        y = &quot;Averge Net Approval (%)&quot;, 
        title = &quot;Trump&#39;s popularity remained steadily below 50% throughout his term&quot;, 
        subtitle = &quot;Estimated Net Approval (approve-disapprove) for Donald Trump&quot;)</code></pre>
-<p><img src="/blogs/trump_popular_files/figure-html/unnamed-chunk-3-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>We can appreciate that the two graphs looks very similar. Differences can, however, be found in the confidence interval band. This is explained by the use of the t-critical value as opposed to a multiplication by 1.96 when calculating the upper and lower bounds.</p>
-<p>The graphs show that Trump’s approval rate has decreased very rapidly below the 50% mark in the early course of his presidency, and has since then remained fairly stable at roughly 40%. The early weeks of 2020 show a further decrease in popularity. This coincides with the start of the corona crisis, and subsequent restricting measures imposed on the population. As these were sometimes seen as a restriction of <em>freedom</em>, they were not well tolerated by some. In later weeks of 2020, Trump’s populariy has seen a new rise, as restrictions were lifted and the presidential election campaigns have started going at full steam.</p>
-</div>
+<p><img src="/blogs/trump_popular_files/figure-html/plot-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><strong>What is this telling us?</strong></p>
+<p>The graph shows that Trump’s approval rate has decreased very rapidly below the 50% mark in the early course of his presidency, and has since then remained fairly stable at roughly 40%.</p>
+<p>The early weeks of 2020 show a further decrease in popularity. This coincides with the start of the corona crisis, and subsequent restricting measures imposed on the population. As these were sometimes seen as a restriction of <em>freedom</em>, they were not well tolerated by some.</p>
+<p>In later weeks of 2020, Trump’s populariy has seen a new rise, as restrictions were lifted and the presidential election campaigns have started going at full steam.</p>
 </div>
 <div id="comparing-confidence-intervals" class="section level2">
 <h2>Comparing Confidence Intervals</h2>
-<p>Let’s analyse the the confidence intervals for <code>week 15</code> (6-12 April 2020) and <code>week 34</code> (17-23 August 2020).</p>
+<p>Taking a look at year 2020, there’s a big difference in some confidence intervals. In the first part of the year, these were narrow - however, more variability is present in the last bits. Let’s analyse the the confidence intervals for <code>week 15</code> (6-12 April 2020) and <code>week 34</code> (17-23 August 2020) and see what they are telling us.</p>
 <p><strong>What’s going on?</strong></p>
 <pre class="r"><code>grouped_df %&gt;% 
   filter(weeknr == 15, yearnr == 2020) %&gt;% 
   select(lower, upper)</code></pre>
 <pre><code>## # A tibble: 1 x 3
-## # Groups:   weeknr [1]
-##   weeknr lower upper
+## # Groups:   yearnr [1]
+##   yearnr lower upper
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     15 -8.92 -6.78</code></pre>
+## 1   2020 -8.92 -6.78</code></pre>
 <pre class="r"><code>grouped_df %&gt;% 
   filter(weeknr == 34, yearnr == 2020) %&gt;% 
   select(lower, upper)</code></pre>
 <pre><code>## # A tibble: 1 x 3
-## # Groups:   weeknr [1]
-##   weeknr lower upper
+## # Groups:   yearnr [1]
+##   yearnr lower upper
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     34 -12.3 -5.83</code></pre>
+## 1   2020 -12.3 -5.83</code></pre>
 <p>It is evident that the confidence interval for week 34 is larger than for week 15. Two elements influence this difference. The first one is the difference in standard deviation: the SD for week 34 is far higher than for week 15. This means that there was more uncertainty among the polls as to the approval rate, which might be due to biased polling techniques or a general uncertainty in the public in the light of the upcoming elections. The second factor is that there are more polls available for week 15 (28 as opposed to 25 for week 34), and a higher sample size decreases the uncertainty.</p>
-</div>
 </div>
