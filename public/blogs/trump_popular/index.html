@@ -471,10 +471,12 @@ sample_n(approval_polllist, 5)</code></pre>
 <div id="data-wrangling" class="section level2">
 <h2>Data wrangling</h2>
 <p>Our variables of interest are:</p>
-<p>-<code>approve</code>: approval rate
--<code>disapprove</code>: disapproval rate
--<code>poll_id</code>: poll_id
--<code>enddate</code>: to associate the “grade” or approval to a date</p>
+<ol style="list-style-type: decimal">
+<li><code>approve</code>: approval rate</li>
+<li><code>disapprove</code>: disapproval rate</li>
+<li><code>poll_id</code>: poll_id</li>
+<li><code>enddate</code>: to associate the “grade” or approval to a date</li>
+</ol>
 <p>First, we filter the data on the <code>subgroup</code> “Voters”, as this is what we are interested in, and then <code>select()</code> our variables of interest.</p>
 <pre class="r"><code># Create new df object
 

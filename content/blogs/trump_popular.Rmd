@@ -89,10 +89,10 @@ The good news is that in our analysis we will not need any of the 3 variables wi
 
 Our variables of interest are:
 
--`approve`: approval rate
--`disapprove`: disapproval rate
--`poll_id`: poll_id
--`enddate`: to associate the "grade" or approval to a date
+1. `approve`: approval rate
+2. `disapprove`: disapproval rate
+3. `poll_id`: poll_id
+4. `enddate`: to associate the "grade" or approval to a date
 
 First, we filter the data on the `subgroup` "Voters", as this is what we are interested in, and then `select()` our variables of interest.
 
