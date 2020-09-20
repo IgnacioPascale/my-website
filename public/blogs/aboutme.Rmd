@@ -11,8 +11,6 @@ slug: aboutme
 title: About me
 ---
 
-![Ignacio](https://www.startus.cc/system/files/styles/startus_resume_photo/private/photo/filetn5MoJ.jpg?itok=9sFjicms)
-
 # Learn about me
 
 Hi, my name is Ignacio Pascale. I was born in Buenos Aires, Argentina.
@@ -49,7 +47,7 @@ I was involved in several projects such as the transformation and loading of mul
 
 During this period, my dream of becoming a Data Scientist just got bigger. For that reason, I decided to apply to the MSc in Analytics and Management at London Business School. After a long application process, I received my acceptance in May, 2020. The programme started on September 2020 and so far it has been the most enriching adventure of my life both socially and acamedically.
 
-[London Business School](https://london.ac.uk/sites/default/files/styles/promo_large/public/2017-10/london-business-school-Campus.jpg?itok=GEG7ZZJs)
+![London Business School](https://london.ac.uk/sites/default/files/styles/promo_large/public/2017-10/london-business-school-Campus.jpg?itok=GEG7ZZJs)
 
 # Skills
 
