@@ -96,7 +96,7 @@ disqusShortname = ""
       title = "How many UK bikes are going to be hired?"
       subtitle = "Using regression analysis to predict the hirings of UK bikes"
       image = "londonbikes.jpg"
-      url = "blogs/ipsum"
+      url = "blogs/londonBikes_regression"
 
     [[params.tiles.showcase]]
       title = "How popular is Donald Trump?"
