@@ -95,7 +95,7 @@ disqusShortname = ""
       title = "About me"
       subtitle = "From Argentina, with Italian roots, to the world. Learn my story!"
       image = "argentina_italy.png"
-      url = "aboutme/aboutme"
+      url = "blogs/aboutme"
     
     [[params.tiles.showcase]]
       title = "How many UK bikes are going to be hired?"
