@@ -34,7 +34,7 @@ library(rsample)
 
 # Introduction
 
-In the following workshop I will analyse the data set `londonBikes` from the UK Government. I will try to build a model in which to quantify the relationship or hired bikes and some explanatory variables using regression analysis, and shortly after I will use that model to predict the number hirings for a Wednesday in London in Summer with more than 15 degrees Celcius.
+In the following workshop I will analyse the data set `londonBikes` from the UK Government. I will try to build a model in which to quantify the relationship of hired bikes and some explanatory variables using regression analysis, and shortly after I will use that model to predict the number hirings for a regular day in London in Summer with more than 15 degrees Celcius.
 
 The workflow will proceed as follows:
 
@@ -74,7 +74,7 @@ Now let's take a look at the raw data by taking a sample of 5.
 
 ```{r sample_5, echo=TRUE}
 # Sample of 5
-sample_n(bikes, 5)
+sample_n(bikes, 5) %>% kable()
 
 ```
 
@@ -253,7 +253,7 @@ spring_summer<- bikes_cleaned %>%
   select(season_name, lower, mean, upper, se, count, sd,t_critical)
 
 # Show results
-spring_summer
+spring_summer %>% kable()
 
 
 ```
@@ -372,9 +372,9 @@ Let's include another variable to analyse this. The `id` of bikes.
 ```{r}
 model2 <- lm(bikes_hired ~ id, bikes_train)
 
-tidy(model2)
-glance(model2)
-anova(model2)
+tidy(model2) %>% kable()
+glance(model2)%>% kable()
+anova(model2)%>% kable()
 ```
 
 In our first model we included the `id` row. As it can be seen, this value seems to be significant enough: the t-statistic is 17.5 (far bigger than 2). The coefficient of 2.8 means that, for every increase in the id number, the number of bikes hired will increase on average 2.8. Our R^2 is, however, just 8%. That means our model only explains 8% of the variability. With this much uncertainty, we might as well just take a look at the mean. 
@@ -437,9 +437,10 @@ After removing the month factor, we want to understand the impact of the `avg_te
 ```{r model5, echo=TRUE}
 
 model5 <- lm (bikes_hired ~ id + season_name + factor(day) + avg_temp, data = bikes_train)
-tidy(model5)
-glance(model5)
-anova(model5)
+
+tidy(model5) %>% kable()
+glance(model5) %>% kable()
+anova(model5) %>% kable()
 ```
 
 Our R^2 improved to 61%. Our new variable `avg_temp` is signficant enough, with a t-stat of 30. For an increase of one unit in the average temperature, hirings will go up by 880. 
@@ -461,9 +462,9 @@ Let's keep adding weather-related variables, as these proved to be significant e
 ```{r model6, echo=TRUE}
 model6 <- lm (bikes_hired ~ id + season_name + factor(day) + avg_temp + avg_humidity + avg_pressure + avg_windspeed + rainfall_mm, data = bikes_train)
 
-tidy(model6)
-glance(model6)
-anova(model6)
+tidy(model6) %>% kable()
+glance(model6) %>% kable()
+anova(model6) %>% kable()
 ```
 
 All of our new variables seem to be significant enough, as all the statistic values are far greater or lower than 2 or -2 correspondingly. As a result, our model can now explain 75% of the variability.
@@ -524,7 +525,7 @@ It seems that our `best model` follows all the rules and the results based from 
 
 # Predict
 
-We want to predict how many bikes will be hired on a Wednesday with an average temperature of more than 15 degrees in summer. Let's filter our dataset first and then build predictions.
+We want to predict how many bikes will be hired on regular day with an average temperature of more than 15 degrees in Summer. Let's filter our dataset first and then build predictions.
 
 ```{r train_filter, echo=TRUE}
 

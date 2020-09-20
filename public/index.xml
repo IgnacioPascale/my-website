@@ -28,7 +28,7 @@ In this blog post, we analyze data from the 2016 GSS sample data, using it to es
       <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/blogs/londonbikes_regression/</guid>
-      <description>Introduction In the following workshop I will analyse the data set londonBikes from the UK Government. I will try to build a model in which to quantify the relationship or hired bikes and some explanatory variables using regression analysis, and shortly after I will use that model to predict the number hirings for a Wednesday in London in Summer with more than 15 degrees Celcius.
+      <description>Introduction In the following workshop I will analyse the data set londonBikes from the UK Government. I will try to build a model in which to quantify the relationship of hired bikes and some explanatory variables using regression analysis, and shortly after I will use that model to predict the number hirings for a regular day in London in Summer with more than 15 degrees Celcius.
 The workflow will proceed as follows:</description>
     </item>
     
