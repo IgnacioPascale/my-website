@@ -98,6 +98,12 @@ disqusShortname = ""
       url = "blogs/aboutme"
     
     [[params.tiles.showcase]]
+      title = "From raw data to valuable insights: Building a data pipeline"
+      subtitle = "My experience dealing with weekly batches of messy raw data"
+      image = "data_pipeline.png"
+      url = "blogs/data_pipeline"
+    
+    [[params.tiles.showcase]]
       title = "How many UK bikes are going to be hired?"
       subtitle = "Using regression analysis to predict the hirings of UK bikes"
       image = "londonbikes.jpg"
