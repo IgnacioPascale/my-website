@@ -93,7 +93,7 @@ Where the `XXXXXXXXXXXXXXXXX` bit would be a bunch of numbers that would contain
 
 ![](https://i.ibb.co/84Zn0wk/extraction.png)
 
-In our code, the methods associated with `load.py` loop over these file names and extract them in the local server. Then, the methods in `extraction.py` will first rename the files (by slicing over the numbers before "*_WEEK") and store the datasets in dictionaries with "file type" ("app", "new", etc) as keys and data frames as values.
+In our code, the methods associated with `load.py` loop over these file names and extract them in the local server. Then, the methods in `extraction.py` will first rename the files (by slicing over the numbers before "*_WEEK") and store the datasets in dictionaries with "file type" ("X1", "X2 B", etc) as keys and data frames as values.
 
 ```shell
 Logged XXXXXXXXXXXXXXXXX_WEEK 29-2020 X2 B.xlsx
