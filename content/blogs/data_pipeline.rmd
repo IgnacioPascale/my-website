@@ -173,7 +173,7 @@ xxxx.csv was loaded successfully on ftp /.../transformed/
 
 ## Quality Check
 
-Once the transformation was done, I needed to make sure that the data was not affected. I developed a script to perform quality check of the data.
+Finally, I needed to make sure that the data was not affected by the transformation. I developed a script to perform quality check of the final output.
 
 The method `quality_check(final_df)` will deliver a comparison between the summary of the units and revenue between the rawfiles and the normalised output. It will show up as follows:
 
@@ -208,7 +208,7 @@ X5 Quality Check - Week:  29
 
 ### Interesting bits and bops
 
-One interesting aspect of this process emerged when doing quality check (QC) on the first transformed files. I was surprised to see that, in some occassions, the QC wouldn't find matches between the raw files (original) and the transformed files. This situation led to me reviewing each class and method at least 10 times to understand what was wrong. After thorough checking, I found that the data provided by the client was not always accurate: in some cases, **they do not sum the units/revenue correctly** in their excel files. This mean that the client was **involuntarily** (at least that is what I want to believe) **under reporting sales**. My pipeline would indeed show the exact amount of sales in terms of units and revenue and their original files wouldn't. That being said, it was likely to spot some differences in the QC, but it was not extremely common.
+One interesting aspect of this process emerged when doing quality check (QC) on the first transformed files. I was surprised to see that, in some occassions, the QC wouldn't find matches between the raw files (original) and the transformed files. This situation led to me reviewing each class and method at least 10 times to understand what was wrong. After thorough checking, I found that the data provided by the client was not always accurate: in some cases, **they do not sum the units/revenue correctly** in their excel files. This meant that the client was **involuntarily** (at least that is what I want to believe) **under-reporting sales**. My pipeline would indeed show the exact amount of sales in terms of units and revenue and their original files wouldn't. That being said, it was likely to spot some differences in the QC, but it was not extremely common.
 
 
 ## Conclusion & Critique
@@ -221,7 +221,7 @@ On the other hand, I would have liked to deploy this pipeline on a container ins
 
 I should mention, however, the system is far from perfect. I believe I am far more advanced on python to develop this in a more efficient way, but since I no longer have access to their systems, I cannot try further modifications on the code.
 
-I did not include code in this article, but if you want to check it, you can see it in the [github repo](). Do make sure to have a look at the readme first as it establishes more technical details associated with the process. Albeit being a kind of old project for me, I am open to any form of constructive criticism and code review.
+I did not include code in this article, but if you want to check it, you can see it in the [github repo](https://github.com/IgnacioPascale/pipeline-project). Do make sure to have a look at the readme first as it establishes more technical details associated with the process. Albeit being a kind of old project for me, I am open to any form of constructive criticism and code review.
 
 Thank you for reading until the end.
 
